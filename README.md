@@ -15,9 +15,11 @@ Dans un premier il sera nécessaire d'initialiser la base de données, pour cela
 
 ### Lancer le site
 Pour lancer le site il vous faudra vous placer dans le dossier `src/script` et dans un premier temps s'assurer que les modules nécéssaires sont installés, vous aurez besoin des trois modules suivants :
+
 	- postgres `pg`
 	- EJS `ejs`
 	- Express `express`
+
 Vous pourrez les installer à l'aide de la commande `npm install` suivi du module souhaité.
 Ensuite vous pourrez lancer la commande `node main.js`.
 Après cela le serveur et lancé et il ne reste plus qu'à aller sur votre navigateur à l'adresse 	`http://localhost:8080/`	
