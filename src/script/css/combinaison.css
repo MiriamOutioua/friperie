@@ -1,0 +1,62 @@
+/* ordinateur */
+@media only screen and (max-width: 2000px) {
+	p {
+		margin-left: 10px;
+		margin-top: 10px;
+		font-size: 20px;
+	}
+	#choix_pantalon, #choix_chemise, #choix_veste {
+		width: 400px;
+		margin-left: 10px;
+	}
+	.taille_pantalon, .taille_chemise, .taille_veste {
+		width: 100px;
+		margin: 10px 0 0 10px;
+	}
+	#ajout {
+		width: 300px;
+		margin: 20px;
+		border: none;
+	}
+	#ajout:hover {
+		background-color: black;
+		color: white;
+	}
+}
+
+/* tablette */
+@media only screen and (max-width: 850px) {
+	#choix_pantalon, #choix_chemise, #choix_veste {
+		width: 75%;
+		margin: 10px auto;
+	}
+	.taille_pantalon, .taille_chemise, .taille_veste {
+		width: 75%;
+		margin: 10px auto;
+	}
+	#ajout {
+		width: 75%;
+		margin: auto;
+	}
+}
+
+/* téléphone */
+@media only screen and (max-width: 480px) {
+	#choix_pantalon, #choix_chemise, #choix_veste {
+		width: 75%;
+		margin-left: 10px;
+	}
+	.taille_pantalon, .taille_chemise, .taille_veste {
+		width: 75%;
+		margin: 10px 0 10px 10px;
+	}
+	#ajout {
+		width: 75%;
+		margin: auto;
+	}
+}
+
+#icon {
+	width: 40px;
+	height: 40px;
+}

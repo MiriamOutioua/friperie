@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/media/icon.png" type="image/x-icon">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/produit.css">
+	<script src="/jquery.js" type="text/javascript"></script>
+	<script src="/bootstrap.min.js" type="text/javascript"></script>
+	<title><%=produit.rows[0].nom %></title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="http://localhost:8080/gerant"><img id="icon" src="/media/icon.png" alt=""></a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			  <li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="http://localhost:8080/gerant">Produits</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="http://localhost:8080/gerant/commandes">Commandes</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	</nav>
+	<div id="container" class="row">
+		<p><%= produit.rows[0].descr %></p>
+		<h3><%= produit.rows[0].prix %>€</h3>
+		<div class="col-xs-12 col-md-6 col-lg-6" id="img-container">
+			<img src="../../<%= produit.rows[0].img %>" id="produit-img" alt="img_produit">
+		</div>
+		<div class="col-xs-12 col-md-6 col-lg-6" id="choice-container">
+			<h4>Modifier les stocks du produit :</h4>
+			<h5>XS</h5>
+			<div class="quantite">
+				<button id="minusXS" class="btn btn-light minus">-</button>
+				<p id="XS" class="taille"><%= tailles["XS"].rows[0].quantite %></p>
+				<button id="plusXS" class="btn btn-light plus">+</button>
+			</div>
+			<h5>S</h5>
+			<div class="quantite">
+				<button id="minusS" class="btn btn-light minus">-</button>
+				<p id="S" class="taille"><%= tailles["S"].rows[0].quantite %></p>
+				<button id="plusS" class="btn btn-light plus">+</button>
+			</div>
+			<h5>M</h5>
+			<div class="quantite">
+				<button id="minusM" class="btn btn-light minus">-</button>
+				<p id="M" class="taille"><%= tailles["M"].rows[0].quantite %></p>
+				<button id="plusM" class="btn btn-light plus">+</button>
+			</div>
+			<h5>L</h5>
+			<div class="quantite">
+				<button id="minusL" class="btn btn-light minus">-</button>
+				<p id="L" class="taille"><%= tailles["L"].rows[0].quantite %></p>
+				<button id="plusL" class="btn btn-light plus">+</button>
+			</div>
+			<h5>XL</h5>
+			<div class="quantite">
+				<button id="minusXL" class="btn btn-light minus">-</button>
+				<p id="XL" class="taille"><%= tailles["XL"].rows[0].quantite %></p>
+				<button id="plusXL" class="btn btn-light plus">+</button>
+			</div>
+			<button id="sauvegarder" value="<%= produit.rows[0].id %>" class="btn btn-light">Sauvegarder</button>
+		</div>
+    </div>
+</body>
+<script>
+	function add(taille) {
+		let taille_tmp = parseInt(taille.text()) + 1;
+    	taille.text(taille_tmp.toString());
+	}
+
+	function reduce(taille) {
+		let taille_tmp = parseInt(taille.text()) - 1;
+		if (taille_tmp >= 0) {
+			taille.text(taille_tmp.toString());
+		} 
+	}
+
+	let tab_tailles = [$("#XS"),$("#S"),$("#M"),$("#L"),$("#XL")];
+	let tab_buttons_minus = [$("#minusXS"),$("#minusS"),$("#minusM"),$("#minusL"),$("#minusXL")];
+	let tab_buttons_plus = [$("#plusXS"),$("#plusS"),$("#plusM"),$("#plusL"),$("#plusXL")];
+
+	let sauvegarder = $("#sauvegarder");
+
+	let save_bool = false;
+
+	// on disable le bouton tant que le gérant n'a pas fait de modifications
+	sauvegarder.prop('disabled', true);
+
+	sauvegarder.click(function () {
+		$.post('/gerant/products/' + sauvegarder.attr("value"), 
+		{
+			xs: tab_tailles[0].text(), s: tab_tailles[1].text(), 
+			m: tab_tailles[2].text(), l: tab_tailles[3].text(), 
+			xl: tab_tailles[4].text()
+		},
+		function() {
+			window.location.href = "/gerant/products/" + sauvegarder.attr("value");
+		});
+	});
+
+	for(let i = 0; i < 5; i++) {
+		tab_buttons_minus[i].click(function() {
+			reduce(tab_tailles[i]);
+			sauvegarder.prop('disabled', false);
+		});
+
+		tab_buttons_plus[i].click(function() {
+			add(tab_tailles[i]);
+			sauvegarder.prop('disabled', false);
+		});
+	}
+	
+</script>
+</html>

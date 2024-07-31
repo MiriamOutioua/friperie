@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/media/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/combinaison.css">
+	<script src="/jquery.js" type="text/javascript"></script>
+    <script src="/bootstrap.min.js" type="text/javascript"></script>
+    <title><%= type_combinaison.rows[0].nom %></title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="http://localhost:8080/"><img id="icon" src="/media/icon.png" alt=""></a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			  <li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="http://localhost:8080/">Accueil</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="http://localhost:8080/panier">Panier</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	</nav>
+    <!-- type combinaison 1 correspond aux combinaisons basiques -->
+    <% if (type_combinaison.rows[0].id === 1) { %>
+        <div id="pantalon-container">
+            <p>Pantalon</p>
+            <select name="choix_pantalon" id="choix_pantalon" class="form-select">
+                <% for (colonne of pantalon_sans_acc.rows) { %>
+                    <option value="<%= colonne.id %>"> <%= colonne.descr %></option>
+                <% } %>
+            </select>
+            <% for (colonne of pantalon_sans_acc.rows) { %>
+                <select name="taille_pantalon<%= colonne.id %>" id="taille_pantalon<%= colonne.id %>" class="taille_pantalon d-none form-select">
+                    <% for (taille in tailles_pour_produit[colonne.id]) { %>
+                        <% if (tailles_pour_produit[colonne.id][taille].rows[0].quantite > 0) { %>
+                            <option value="<%= taille %>"><%= taille %></option>
+                        <% }
+                    } %>
+                </select>
+            <% } %>
+        </div>
+        <div id="chemise-container">
+            <p>Chemise</p>
+            <select name="choix_chemise" id="choix_chemise" class="form-select">
+                <% for (colonne of chemise_sans_acc.rows) { %>
+                    <option value="<%= colonne.id %>"> <%= colonne.descr %></option>
+                <% } %>    
+            </select>
+            <% for (colonne of chemise_sans_acc.rows) { %>
+                <select name="taille_chemise<%= colonne.id %>" id="taille_chemise<%= colonne.id %>" class="taille_chemise d-none form-select">
+                    <% for (taille in tailles_pour_produit[colonne.id]) { %>
+                        <% if (tailles_pour_produit[colonne.id][taille].rows[0].quantite > 0) { %>
+                            <option value="<%= taille %>"><%= taille %></option>
+                        <% } 
+                    } %>
+                </select>
+            <% } %>
+        </div>
+        <div id="veste-container">
+            <p>Veste</p>
+            <select name="choix_veste" id="choix_veste" class="form-select">
+                <% for (colonne of veste.rows) { %>
+                    <option value="<%= colonne.id %>"> <%= colonne.descr %></option>
+                <% } %>    
+            </select>
+            <% for (colonne of veste.rows) { %>
+                <select name="taille_veste<%= colonne.id %>" id="taille_veste<%= colonne.id %>" class="taille_veste d-none form-select">
+                    <% for (taille in tailles_pour_produit[colonne.id]) { %>
+                        <% if (tailles_pour_produit[colonne.id][taille].rows[0].quantite > 0) { %>
+                            <option value="<%= taille %>"><%= taille %></option>
+                        <% } 
+                    } %>
+                </select>
+            <% } %>
+        </div>
+    <% } else { %>
+        <!-- on est dans le cas où c'est une combinaison de type business -->
+        <div id="pantalon-container">
+            <p>Pantalon</p>
+                <select name="choix_pantalon" id="choix_pantalon" class="form-select">
+                    <% for (colonne of pantalon_business.rows) { %>
+                        <option value="<%= colonne.id %>"> <%= colonne.descr %></option>
+                    <% } %>
+                </select>
+                <% for (colonne of pantalon_business.rows) { %>
+                    <select name="taille_pantalon<%= colonne.id %>" id="taille_pantalon<%= colonne.id %>" class="taille_pantalon d-none form-select">
+                        <% for (taille in tailles_pour_produit[colonne.id]) { %>
+                            <% if (tailles_pour_produit[colonne.id][taille].rows[0].quantite > 0) { %>
+                                <option value="<%= taille %>"><%= taille %></option>
+                            <% } 
+                        } %>
+                    </select>
+                <% } %>
+        </div>
+        <div id="chemise-container">
+            <p>Chemise</p>
+                <select name="choix_chemise" id="choix_chemise" class="form-select">
+                    <% for (colonne of chemise_business.rows) { %>
+                        <option value="<%= colonne.id %>"> <%= colonne.descr %></option>
+                    <% } %>    
+                </select>
+                <% for (colonne of chemise_business.rows) { %>
+                    <select name="taille_chemise<%= colonne.id %>" id="taille_chemise<%= colonne.id %>" class="taille_chemise d-none form-select">
+                        <% for (taille in tailles_pour_produit[colonne.id]) { %>
+                            <% if (tailles_pour_produit[colonne.id][taille].rows[0].quantite > 0) { %>
+                                <option value="<%= taille %>"><%= taille %></option>
+                            <% } 
+                        } %>
+                    </select>
+                <% } %>
+        </div>
+        <div id="veste-container">
+            <p>Veste</p>
+                <select name="choix_veste" id="choix_veste" class="form-select">
+                    <% for (colonne of veste.rows) { %>
+                        <option value="<%= colonne.id %>"> <%= colonne.descr %></option>
+                    <% } %>    
+                </select>
+                <% for (colonne of veste.rows) { %>
+                    <select name="taille_veste<%= colonne.id %>" id="taille_veste<%= colonne.id %>" class="taille_veste d-none form-select">
+                        <% for (taille in tailles_pour_produit[colonne.id]) { %>
+                            <% if (tailles_pour_produit[colonne.id][taille].rows[0].quantite > 0) { %>
+                                <option value="<%= taille %>"><%= taille %></option>
+                            <% } 
+                        } %>
+                    </select>
+                <% } %>
+        </div>
+    <% } %>
+
+    <button id="type_de_combi" value="<%= type_combinaison.rows[0].id %>" hidden></button>
+    <div class="row">
+        <button id="ajout" value="<%= type_combinaison.rows[0].id %>"  class="btn btn-light">Ajouter au panier</button>
+    </div>
+</body>
+<script>
+    let choix_pantalon = $("#choix_pantalon");
+    let choix_chemise = $("#choix_chemise");
+    let choix_veste = $("#choix_veste");
+    let ajout = $("#ajout");
+
+    // on utilise la classe d-none pour cacher/afficher un élément 
+    // car c'est ce qui remplace l'attribut hidden dans les dernières versions de bootstrap
+    $("#taille_pantalon" + choix_pantalon.val()).removeClass("d-none");
+    $("#taille_chemise" + choix_chemise.val()).removeClass("d-none");
+    $("#taille_veste" + choix_veste.val()).removeClass("d-none");
+
+    // chaque fois que le client change de choix de pantalon/chemise/veste
+    // on cache l'ancien select de taille et on récupère celui qui correspond au choix du client
+
+    choix_pantalon.change(function() {
+        $(".taille_pantalon").addClass("d-none");
+        $("#taille_pantalon" + choix_pantalon.val()).removeClass("d-none");
+    });
+
+    choix_chemise.change(function() {
+        $(".taille_chemise").addClass("d-none");
+        $("#taille_chemise" + choix_chemise.val()).removeClass("d-none");
+    });
+
+    choix_veste.change(function() {
+        $(".taille_veste").addClass("d-none");
+        $("#taille_veste" + choix_veste.val()).removeClass("d-none");
+    });
+
+    ajout.click(function() {
+        let taille_pantalon = $("#taille_pantalon" + choix_pantalon.val()).val();
+        let taille_chemise = $("#taille_chemise" + choix_chemise.val()).val();
+        let taille_veste = $("#taille_veste" + choix_veste.val()).val();
+        $.post('/sets/' + ajout.attr('value'), 
+        {
+            pantalon : choix_pantalon.val(), chemise : choix_chemise.val(), 
+            veste : choix_veste.val(), taille_pantalon : taille_pantalon, 
+            taille_chemise : taille_chemise, taille_veste : taille_veste
+        },
+        function() {
+            window.location.href = '/sets/' + ajout.attr("value");
+        });
+    });
+    
+</script>
+</html>

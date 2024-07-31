@@ -1,0 +1,106 @@
+* {
+	box-sizing: border-box;
+}
+/* ordinateur */
+@media only screen and (max-width: 2000px) {
+	#produit-img {
+		width: 500px;
+		height: 500px;
+		/* pour ne pas déformer l'image */
+		object-fit: contain;
+	}
+	#choice-container {
+		padding: 10px;
+	}
+	#ajout {
+		width: 300px;
+	}
+	#accessoire {
+		width: 300px;
+		margin-bottom: 20px;
+		cursor: pointer;
+	}
+	.navbar {
+		margin-bottom: 50px;
+	}
+}
+
+/* tablette */
+@media only screen and (max-width: 850px) {
+	#produit-img {
+		width: 450px;
+		height: 450px;
+	}
+	#ajout {
+		width: 200px;
+	}
+	.navbar {
+		margin-bottom: 20px;
+	}
+}
+
+/* téléphone */
+@media only screen and (max-width: 480px) {
+	#produit-img {
+		width: 100%;
+		height: 400px;
+	}
+	#choice-container {
+		padding: 20px;
+	}
+	#ajout {
+		margin: auto;
+		width: 75%;
+	}
+	#accessoire {
+		width: 200px;
+		margin-bottom: 20px;
+	}
+	.navbar {
+		margin-bottom: 0;
+	}
+}
+
+#choice-container {
+	display: flex;
+	flex-direction: column;
+	font-weight: bold;
+}
+
+#quantite-container {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10px;
+}
+
+#taille {
+	width: 80px;
+	cursor: pointer;
+	margin: 10px 0 10px 0;
+}
+
+#ajout {
+	border: none;
+}
+
+#ajout:hover {
+	background-color: black;
+	color: white;
+}
+
+#plus:hover {
+	border: 1px solid black;
+}
+
+#minus:hover {
+	border: 1px solid black;
+}
+
+#minus, #quantite {
+	margin-right: 10px;
+}
+
+#icon {
+	width: 40px;
+	height: 40px;
+}

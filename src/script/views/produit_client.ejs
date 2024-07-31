@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/media/icon.png" type="image/x-icon">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/produit_client.css">
+	<script src="/jquery.js" type="text/javascript"></script>
+	<script src="/bootstrap.min.js" type="text/javascript"></script>
+	<title><%= produit.rows[0].nom %></title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="http://localhost:8080/"><img id="icon" src="/media/icon.png" alt=""></a>
+		  <a class="navbar-brand" href="http://localhost:8080/">Navbar</a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			  <li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="http://localhost:8080/">Accueil</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="http://localhost:8080/panier">Panier</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	  </nav>
+	<div class="row">
+		<div class="col-xs-12 col-md-6 col-lg-6" id="img-container">
+			<img src="../../<%= produit.rows[0].img %>" id="produit-img" alt="didid">
+		</div>
+		<div class="col-xs-12 col-md-6 col-lg-6" id="choice-container">
+			<h3><%= produit.rows[0].nom %></h3>
+			<p><%= produit.rows[0].descr %></p>
+			<h3 id="prix"><%= produit.rows[0].prix %>€</h3>
+			<select name="taille" id="taille" class="form-select">
+				<% for (const [key, value] of Object.entries(tailles)) {
+					if (value.rows[0].quantite === 0) { %>
+						<option value="<%= key %>" disabled><%= key %> (épuisé)</option>
+					<% } else { %>
+						<option value="<%= key %>"><%= key %></option>
+					<% } 
+				} %>
+			</select>
+			<p>Quantité</p>
+			<div id="quantite-container">
+				<button id="minus" class="btn btn-light">-</button>
+				<p id="quantite">1</p>
+				<button id="plus" class="btn btn-light">+</button>
+			</div>
+			<% if (accessoire.length > 1) { %>
+				<p>Accessoire</p>
+				<select name="accessoire" id="accessoire" class="form-select">
+					<option value="NULL">Pas d'accessoire</option>
+					<% for (x of accessoire) { %>
+						<option value="<%=x%>"><%= x %></option>
+					<% } %>
+				</select>
+			<% } %>
+			<% if (accessoire.length === 0) { %>
+				<input type="hidden" id="accessoire" value="NULL">
+			<% } if (accessoire.length === 1) { %>
+				<input type="hidden" id="accessoire" value="<%= accessoire[0] %>">
+			<% } %>
+			<button id="ajout" value="<%= produit.rows[0].id %>" class="btn btn-light">Ajouter au panier</button>
+			<% for (const [key, value] of Object.entries(tailles)) { %>
+				<input type="hidden" id="<%= key %>" value="<%= value.rows[0].quantite %>">
+			<% } %>
+		</div>
+	</div>
+</body>
+<script>
+	let taille = $("#taille");
+	let minus = $("#minus");
+	let plus = $("#plus");
+	let quantite = $("#quantite");
+	let ajout = $("#ajout");
+	let tab_tailles = [$("#XS"),$("#S"),$("#M"),$("#L"),$("#XL")];
+	let prix = $("#prix");
+	let accessoire = $("#accessoire");
+
+	taille.change(function() {
+		quantite.text("1");
+	});
+
+	minus.click(function() {
+		let quantite_cur = parseInt(quantite.text()) - 1;
+		if (quantite_cur > 0) {
+			quantite.text(quantite_cur.toString());
+		}
+	});
+
+	plus.click(function() {
+		let quantite_cur = parseInt(quantite.text()) + 1;
+		let taille_max;
+		switch (taille.val()) {
+			case "XS":
+				taille_max = parseInt(tab_tailles[0].val());
+			break;
+			case "S":
+				taille_max = parseInt(tab_tailles[1].val());
+				break;
+			case "M":
+				taille_max = parseInt(tab_tailles[2].val());
+			break;
+			case "L":
+				taille_max = parseInt(tab_tailles[3].val());
+				break;
+			case "XL":
+				taille_max = parseInt(tab_tailles[4].val());
+			break;
+			default:
+				break;
+		}
+		if (quantite_cur <= taille_max) {
+			quantite.text(quantite_cur.toString());
+		}
+	});
+
+	ajout.click(function() {
+		$.post('/products/' + ajout.attr("value"), 
+		{
+			taille : taille.val(), quantite : parseInt(quantite.text()), 
+			prix : parseFloat(prix.text()), accessoire : accessoire.val()
+		}, 
+		function() {
+			window.location.href = '/products/' + ajout.attr("value");
+		});
+	});
+
+</script>
+</html>
