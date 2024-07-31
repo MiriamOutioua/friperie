@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/media/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/collection.css">
+	<script src="/jquery.js" type="text/javascript"></script>
+    <script src="/bootstrap.min.js" type="text/javascript"></script>
+    <title>Accueil</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="http://localhost:8080<%=chemin_courant%>"><img id="icon" src="/media/icon.png" alt=""></a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<% if (chemin_courant == "/") { %>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="http://localhost:8080/">Accueil</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:8080/panier">Panier</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:8080/gerant">Gérant</a>
+					</li>
+				<% } else { %>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="http://localhost:8080/gerant">Produits</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:8080/gerant/commandes">Commandes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:8080/">Client</a>
+					</li>
+				<% } %>
+			</ul>
+		  </div>
+		</div>
+	</nav>
+	<div id="container" class="container-fluid">
+		<div id="pantalon" class="categorie">
+			<% if (pantalon.rows.length > 2) { %>
+			<button class="btn btn-light" id="prevpantalon"><</button>
+			<% } %>
+			<% let tmp = 1; %>
+			<!-- tmp va servir à donner un id unique au box qui contienne nos produits -->
+			<!-- on va le réinitialiser à chaque nouvelle catégorie -->
+			<% for (colonne of pantalon.rows) { %>
+				<a href="http://localhost:8080<%=chemin_courant%>products/<%=colonne.id%>">
+					<div id="pantalonbox<%=tmp%>" class="card">
+						<img class="card-img-top" src="<%=colonne.img%>" alt="">
+						<div class="card-body">
+							<li id="li<%= colonne.id %>">
+								<h5 class="card-title"><%= colonne.prix %>€</h5>
+								<p class="card-text"><%= colonne.nom %></p>
+							</li>
+						</div>
+					</div>
+				</a>
+				<% tmp = tmp+1; %>
+			<% } %>
+			<p id="pantalon_cur" hidden>1</p>
+			<% if (pantalon.rows.length > 2) { %>
+			<button class="btn btn-light" id="nextpantalon">></button>
+			<% } %>
+		</div>
+		<div id="chemise" class="categorie">
+			<% if (chemise.rows.length > 2) { %>
+			<button class="btn btn-light" id="prevchemise"><</button>
+			<% } %>
+			<% tmp = 1; %>
+			<% for (colonne of chemise.rows) { %>
+				<a href="http://localhost:8080<%=chemin_courant%>products/<%=colonne.id%>">
+					<div id="chemisebox<%=tmp%>" class="card">
+						<img class="card-img-top" src="<%=colonne.img%>" alt="">
+						<div class="card-body">
+							<li id="li<%= colonne.id %>">
+								<h5 class="card-title"><%= colonne.prix %>€</h5>
+								<p class="card-text"><%= colonne.nom %></p>
+							</li>
+						</div>
+					</div>
+				</a>
+				<% tmp = tmp+1; %>
+			<% } %>
+			<p id="chemise_cur" hidden>1</p>
+			<% if (chemise.rows.length > 2) { %>
+			<button class="btn btn-light" id="nextchemise">></button>
+			<% } %>
+		</div>
+		<div id="veste" class="categorie">
+			<% if (veste.rows.length > 2) { %>
+			<button class="btn btn-light" id="prevveste"><</button>
+			<% } %>
+			<% tmp = 1; %>
+			<% for (colonne of veste.rows) { %>
+				<a href="http://localhost:8080<%=chemin_courant%>products/<%=colonne.id%>">
+					<div id="vestebox<%=tmp%>" class="card">
+						<img class="card-img-top" src="<%=colonne.img%>" alt="">
+						<div class="card-body">
+							<li id="li<%= colonne.id %>">
+								<h5 class="card-title"><%= colonne.prix %>€</h5>
+								<p class="card-text"><%= colonne.nom %></p>
+							</li>
+						</div>
+					</div>
+				</a>
+				<% tmp = tmp+1; %>
+			<% } %>
+			<p id="veste_cur" hidden>1</p>
+			<% if (veste.rows.length > 2) { %>
+			<button class="btn btn-light" id="nextveste">></button>
+			<% } %>
+		</div>
+		<div id="autre" class="categorie">
+			<% if (autre.rows.length > 2) { %>
+			<button class="btn btn-light" id="prevautre"><</button>
+			<% } %>
+			<% tmp = 1; %>
+			<% for (colonne of autre.rows) { %>
+				<a href="http://localhost:8080<%=chemin_courant%>products/<%=colonne.id%>">
+					<div id="autrebox<%=tmp%>" class="card">
+						<img class="card-img-top" src="<%=colonne.img%>" alt="">
+						<div class="card-body">
+							<li id="li<%= colonne.id %>">
+								<h5 class="card-title"><%= colonne.prix %>€</h5>
+								<p class="card-text"><%= colonne.nom %></p>
+							</li>
+						</div>
+					</div>
+				</a>
+				<% tmp = tmp+1; %>
+			<% } %>
+			<p id="autre_cur" hidden>1</p>
+			<% if (autre.rows.length > 2) { %>
+			<button class="btn btn-light" id="nextautre">></button>
+			<% } %>
+		</div>
+		<!-- on affiche les combinaisons seulement au client puisqu'une combinaison n'a pas de stock -->
+		<% if (chemin_courant == '/') { %>
+		<div id="combinaison" class="categorie">
+			<% if (type_combinaison.rows.length > 2) { %>
+			<button class="btn btn-light" id="prevcombinaison"><</button>
+			<% } %>
+			<% tmp = 1; %>
+			<% for (colonne of type_combinaison.rows) { %>
+				<a href="http://localhost:8080/sets/<%=colonne.id%>">
+					<div id="combinaisonbox<%=tmp%>" class="card">
+						<img class="card-img-top" src="<%= colonne.img %>" alt="">
+						<div class="card-body">
+							<li id="liCOMB<%= colonne.id %>">
+								<h5 class="card-title"><%= colonne.prix %>€</h5>
+								<p class="card-text"><%= colonne.nom %></p>
+							</li>
+						</div>
+					</div>
+				</a>
+				<% tmp = tmp+1; %>
+			<% } %>
+			<p id="combinaison_cur" hidden>1</p>
+			<% if (type_combinaison.rows.length > 2) { %>
+			<button class="btn btn-light" id="nextcombinaison">></button>
+			<% } %>
+		</div>
+		<% } %>
+	</div>
+	<button id="cardinal" value="<%= nb_de_produit.rows[0].count %>" hidden></button>
+	<button id="cardinal_combi" value="<%= nb_de_combi.rows[0].count %>" hidden></button>
+	<button id="chemin_courant" value="<%= chemin_courant %>" hidden></button>
+</body>
+<script>
+	let cardinal = $("#cardinal");
+	let cardinal_combi = $("#cardinal_combi");
+	let chemin_courant = $("#chemin_courant");
+	let categories = ["pantalon", "chemise", "veste", "autre", "combinaison"];
+	let max_elem = 0;
+
+	// si la taille est plus grande que celle du téléphone on affiche 3 produits à la fois
+	if ($(window).width() > 480) {
+		max_elem = 3;
+	} else {
+		max_elem = 2;
+	}
+
+	// renvoi l'id max d'une catégorie
+	function max(categorie) {
+		let i = 1;
+		while ($("#" + categorie + "box" + i).length > 0) {
+			i++;
+		}
+		return i-1;
+	}
+
+	function initCategorie(categorie) {
+		if (max(categorie) > max_elem) {
+			// on cache tous les éléments qui sont après max_elem (2 ou 3 selon la taille de l'écran)
+			for (let i = (max_elem + 1); i <= max(categorie); i++) {
+				$("#" + categorie + "box" + i).addClass("d-none");
+			}
+		}
+	}
+
+	function resetCategorie(categorie) {
+		let i = 1;
+		// on affiche tous les éléments avant max_elem, ou jusqu'à ce qu'on atteigne l'élément max
+		while (i <= max_elem && i <= max(categorie)) {
+			$("#" + categorie + "box" + i).removeClass("d-none");
+			i++;
+		}
+		// ensuite on cache tous les autres
+		while (i <= max(categorie)) {
+			$("#" + categorie + "box" + i).addClass("d-none");
+			i++;
+		}
+	}
+
+	// va afficher le prochain élément d'une catégorie
+	// nb représente l'élément courant, celui qui est le plus à gauche de l'affichage
+	// si on veut récupérer le prochain élément on doit avancer de max_elem - 1
+	function showCategorie(categorie, nb) {
+		// si le prochain élément dépasse le max on reset
+		if (nb + (max_elem - 1) >= max(categorie)) {
+			resetCategorie(categorie);
+		} else {
+			// on cache l'élément courant
+			$("#" + categorie + "box" + nb).addClass("d-none");
+			// puis on affiche les éléments suivants
+			for (let i = nb + 1; i < nb + (max_elem + 1) && i <= max(categorie); i++) {
+				$("#" + categorie + "box" + i).removeClass("d-none");
+			}
+		}
+	}
+
+	function showPrevCategorie(categorie, nb) {
+		// si reculer nous fais sortir de la liste alors on reset
+		if (nb - 1 <= 1) {
+			resetCategorie(categorie);
+		} else {
+			// on cache l'élément le plus à droite
+			$("#" + categorie + "box" + (nb + (max_elem - 1))).addClass("d-none");
+			// puis on affiche les éléments en s'arrêtant avant celui-ci
+			for (let i = nb - 1; i < nb + 1 && i <= max(categorie); i++) {
+				$("#" + categorie + "box" + i).removeClass("d-none");
+			}
+		}
+	}
+
+	// categorie_cur est un élément p contenant l'id de l'élément courant
+
+	function prevCategorie(categorie) {
+		let categorie_cur = $("#" + categorie + "_cur");
+		let cur = parseInt(categorie_cur.text());
+		showPrevCategorie(categorie, cur);
+		if (cur - 1 <= 1) {
+			categorie_cur.text("1");
+		} else {
+			cur--;
+			categorie_cur.text(cur.toString());
+		}
+	}
+
+	function nextCategorie(categorie) {
+		let categorie_cur = $("#" + categorie + "_cur");
+		let cur = parseInt(categorie_cur.text());
+		showCategorie(categorie, cur);
+		if (cur + (max_elem - 1) >= max(categorie)) {
+			categorie_cur.text("1");
+		} else {
+			cur++;
+			categorie_cur.text(cur.toString());
+		}		
+	}
+
+	// on initialise les catégories 
+	// et on ajoute des clicks pour appeler nos fonctions qui change dynamiquement l'affichage
+	categories.forEach(function (categorie) {
+		initCategorie(categorie);
+		$("#next" + categorie).click(function () {
+			nextCategorie(categorie);
+		});
+		$("#prev" + categorie).click(function () {
+			prevCategorie(categorie);
+		});
+	});
+
+</script>
+</html>
