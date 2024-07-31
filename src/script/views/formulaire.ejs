@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/media/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/formulaire.css">
+	<script src="/jquery.js" type="text/javascript"></script>
+    <script src="/bootstrap.min.js" type="text/javascript"></script>
+    <title>Formulaire</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="http://localhost:8080/"><img id="icon" src="/media/icon.png" alt=""></a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			  <li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="http://localhost:8080/">Accueil</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="http://localhost:8080/panier">Panier</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	</nav>
+    <div id="title">
+        <h2>Finalisation de la commande</h2>
+    </div>
+    <div id="form-container">
+        <form action="http://localhost:8080/formulaire" method="post" onsubmit="return checkFormulaire()">
+            <div class="mb-3">
+                <label for="nom" class="form-label">Nom (30 caractères max.)</label>
+                <input type="text" class="form-control" name="nom" id="nom">
+            </div>
+
+            <div class="mb-3">
+                <label for="prenom" class="form-label">Prénom (30 caractères max.)</label>
+                <input type="text" class="form-control" name="prenom" id="prenom">
+            </div>
+
+            <div class="mb-3">
+                <label for="adresse" class="form-label">Adresse (80 caractères max.)</label>
+                <input type="text" class="form-control" name="adresse" id="adresse">
+            </div>
+
+            <div class="mb-3">
+                <label for="num" class="form-label">Numéro de portable (30 caractères max.)</label>
+                <input type="text" class="form-control" name="num" id="num">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Adresse Email (50 caractères max.)</label>
+                <input type="text" class="form-control" name="email" id="email">
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</flabel>
+                <select name="date" id="date" class="form-select">
+                    <% for (let i = 0; i < jours.length; i++) { %>
+                        <option value="<%= jours[i] %>"><%= jours[i] %></option>
+                    <% } %>
+                </select>
+
+                <label for="heure" class="form-label">Heure</label>
+                <select name="heure" id="heure" class="form-select">
+                    <option value="10:00:00">10:00</option>
+                    <option value="14:00:00">14:00</option>
+                    <option value="18:00:00">18:00</option>
+                </select>
+            </div>
+
+            <input type="hidden" id="prix" name="prix" value="<%=prix_total.rows[0].sum%>">
+            <h4><%= prix_total.rows[0].sum %>€</h4>
+            <div class="mb-3">
+                <input type="submit" value="Valider" class="btn btn-light" id="valider">
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    // vérifie si tous les champs du formulaire sont valides
+    function checkFormulaire() {
+        let nom = $("#nom");
+        let prenom = $("#prenom");
+        let adresse = $("#adresse");
+        let num = $("#num");
+        let email = $("#email");
+        let format_flag = true;
+        if (nom.val().trim().length == 0 || nom.val().length > 30 || /\d/.test(nom.val())) {
+            format_flag = false;
+            alert("Nom dans le mauvais format");
+        }
+        if (prenom.val().trim().length == 0 || prenom.val().length > 30 || /\d/.test(prenom.val())) {
+            format_flag = false;
+            alert("Prénom dans le mauvais format");
+        }
+        if (adresse.val().trim().length == 0 || adresse.val().length > 80) {
+            format_flag = false;
+            alert("Adresse dans le mauvais format");
+        }
+        if (num.val().trim().length == 0 || num.val().length > 30) {
+            format_flag = false;
+            alert("Numéro dans le mauvais format");
+        }
+        if (email.val().trim().length == 0 || email.val().length > 30) {
+            format_flag = false;
+            alert("Email dans le mauvais format");
+        }
+        return format_flag;
+    }
+</script>
+</html>

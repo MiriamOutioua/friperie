@@ -1,0 +1,57 @@
+@media only screen and (max-width: 2000px) {
+	#sauvegarder {
+		width: 300px;
+	}
+	#page-buttons {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		width: 200px;
+		margin: 0 auto;
+		margin-bottom: 40px;
+	}
+	#page {
+		margin: 0 15px 0 15px;
+	}
+	#prev, #next {
+		border: none;
+	}
+	#prev:hover {
+		color: white;
+		background-color: black;
+	}
+	#next:hover {
+		color: white;
+		background-color: black;
+	}
+}
+
+@media only screen and (max-width: 850px) {
+	#sauvegarder {
+		width: 100%;
+	}
+}
+
+.supprimer, #sauvegarder {
+	border: none;
+}
+.supprimer:hover {
+	color: white;
+	background-color: #e5383b;
+}
+
+#sauvegarder:hover {
+	color: white;
+	background-color: #38b000;
+
+}
+
+#sauvegarder {
+	margin-left: 10px;
+}
+
+#icon {
+	width: 40px;
+	height: 40px;
+}

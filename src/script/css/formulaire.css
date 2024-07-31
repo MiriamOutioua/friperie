@@ -1,0 +1,63 @@
+/* ordinateur */
+@media only screen and (max-width: 2000px) {
+	.mb-3 {
+		padding: 0 10px 0 10px;
+	}
+	h4{
+		padding: 0 10px 0 10px;
+	}
+	.form-control {
+		width: 500px;
+	}
+	.form-select {
+		margin-top: 5px;
+	}
+	#valider {
+		width: 500px;
+		border: none;
+	}
+
+	#valider:hover {
+		color: white;
+		background-color: #38b000;
+	}
+}
+
+@media only screen and (max-width: 2000px) and (min-width: 850px) {
+	#form-container {
+		width:100%;
+		display: flex;
+		justify-content: center;
+	}
+	#title {
+		text-align: center;
+	}
+}
+
+/* tablette */
+@media only screen and (max-width: 850px) {
+	.form-control {
+		width: 100%;
+	}
+	#valider {
+		width: 100%;
+	}
+	#title {
+		padding: 0 10px 0 10px;
+	}
+}
+
+/* téléphone */
+@media only screen and (max-width: 480px) {
+	.form-control {
+		width: 100%;
+	}
+	#valider {
+		width: 100%;
+	}
+}
+
+#icon {
+	width: 40px;
+	height: 40px;
+}

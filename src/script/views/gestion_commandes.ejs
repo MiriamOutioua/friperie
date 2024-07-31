@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/media/icon.png" type="image/x-icon">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/commandes.css">
+	<script src="/jquery.js" type="text/javascript"></script>
+	<script src="/bootstrap.min.js" type="text/javascript"></script>
+    <title>Commandes</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="http://localhost:8080/gerant"><img id="icon" src="/media/icon.png" alt=""></a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			  <li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="http://localhost:8080/gerant">Produits</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="http://localhost:8080/gerant/commandes">Commandes</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	</nav>
+    <div>
+	<table id="commandes" class="table">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Prénom</th>
+				<th scope="col">Numéro</th>
+				<th scope="col">Email</th>
+				<th scope="col">Date/heure</th>
+				<th scope="col">Prix</th>
+				<th scope="col">Status</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- on défini un id unique pour chaque ligne de la table -->
+			<% let i = 1; %>
+			<% for (colonne of commandes.rows) { %>
+				<tr id="commande<%= i %>">
+					<td><%= colonne.nom %></td>
+					<td><%= colonne.prenom %></td>
+					<td><%= colonne.num %></td>
+					<td><%= colonne.mail %></td>
+					<td><%= colonne.heure_livraison %></td>
+					<td><%= colonne.prix %>€</td>
+					<td><%= colonne.stat %></td>
+					<% if (colonne.stat == 'LIVREE') { %>
+						<td>
+							<button id="<%= colonne.id %>" class="btn btn-light supprimer"value="<%= colonne.id %>">X</button>
+						</td>
+					<% } %>
+					<% if (colonne.stat == 'EN COURS') { %>
+						<td></td>
+					<% } %>
+					<% i = i+1; %>
+				<% } %>
+				</tr>
+		</tbody>
+	</table>
+	<div id="page-buttons">
+		<button class="btn btn-light" id="prev">Prev</button>
+		<p id="page">1</p>
+		<button class="btn btn-light" id="next">Next</button>
+	</div>
+	<div id="sauvegarder-container">
+		<button id="sauvegarder" class="btn btn-light">Sauvegarder</button>
+	</div>
+</body>
+<script>
+	let btns = document.querySelectorAll('button');
+    let commandes_supps = [];
+	let sauvegarder = $("#sauvegarder");
+	// tableau qui permet de connaître la quantité de commandes dans la table
+	let commandes = $("#commandes tr");
+	let page_nb = $("#page");
+	let prev = $("#prev");
+	let next = $("#next");
+	let max_page = Math.ceil(commandes.length/5);
+
+	prev.prop('disabled', true);
+	next.prop('disabled', true);
+	sauvegarder.prop('disabled', true);
+
+	// initialise la page en ne laissant affichées que les 5 premières commandes
+	function initPage() {
+		if (commandes.length > 5) {
+			for (let i = 6; i < commandes.length; i++) {
+				$("#commande" + i).addClass("d-none");
+			}
+			let page_cur = parseInt(page_nb.text());
+			// si la page courrante n'est pas la dernière page on peut utiliser le bouton next
+			if (page_cur < max_page) {
+				next.prop('disabled', false);
+			}
+		}
+	}
+
+	// cache toutes les commandes de la table
+	function hidePage() {
+		for (let i = 0; i < commandes.length; i++) {
+			$("#commande" + i).addClass("d-none");
+		}
+	}
+
+	// cache les tables puis les affiches selon la page voulue
+	function showPage(page) {
+		hidePage();
+		// 5 est le nombre maximal de commandes par page
+		let debut = (page - 1) * 5 + 1;
+		let fin = debut + 4;
+		let i = debut;
+		// on affiche les commandes entre le début et la fin qu'on a calculé
+		for (let i = debut; (i < commandes.length) && (i < (fin + 1)); i++) {
+			$("#commande" + i).removeClass("d-none");
+		}
+	}
+
+	initPage();
+
+	prev.click(function () {
+		// on peut utiliser next puisqu'on a reculé d'une page
+		next.prop('disabled', false);
+		let page_cur = parseInt(page_nb.text()) - 1;
+		if (page_cur >= 1) {
+			page_nb.text(page_cur);
+			showPage(page_cur);
+			// si c'est la première page on ne peut pas aller plus en arrière
+			if (page_cur == 1) {
+				prev.prop('disabled', true);
+			}
+		}
+	});
+
+	next.click(function() {
+		// on peut utiliser prev puisqu'on a avancé d'une page
+		prev.prop('disabled', false);
+		let page_cur = parseInt(page_nb.text()) + 1;
+		if (page_cur <= max_page) {
+			page_nb.text(page_cur);
+			showPage(page_cur);
+			// si c'est la dernière page on ne peut plus avancer
+			if (page_cur == max_page) {
+				next.prop('disabled', true);
+			}
+		}
+	});
+    
+	// les boutons permettant de supprimer une commande
+	for (i of btns) {
+        let button_bool = false;
+		// vérifie si il a bien une valeur pour pas confondre avec le bouton sauvegarder
+        if(i.hasAttribute('value')) {
+			i.addEventListener('click', function() {
+				if(!button_bool) {
+					// on ajoute la commande aux commandes à supprimer
+					commandes_supps.push(this.value);
+					button_bool = true;
+					// on laisse le choix au gérant de retourner en arrière
+					this.innerHTML = "R";
+					sauvegarder.prop('disabled', false);
+				} else {
+					let index = commandes_supps.indexOf(this.value);
+					// on retire la commande des commandes à supprimer
+					commandes_supps.splice(index, 1);
+					button_bool = false;
+					this.innerHTML = "X";
+					// s'il reste des commandes à supprimer le bouton sauvegarder reste disponible
+					if (commandes_supps.length > 0) {
+						sauvegarder.prop('disabled', false);
+					} else {
+						sauvegarder.prop('disabled', true);
+					}
+				}
+			});
+		}
+	}
+
+	sauvegarder.click(function() {
+		$.post('/gerant/commandes',
+			{
+				commandes_supps : commandes_supps
+			}, 
+			function() {
+				window.location.href = "/gerant/commandes";
+			}
+		);
+	});
+
+</script>
+</html>

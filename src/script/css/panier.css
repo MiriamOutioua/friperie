@@ -1,0 +1,43 @@
+@media only screen and (max-width: 2000px) {
+	#finaliser {
+		width: 300px;
+	}
+}
+
+@media only screen and (max-width: 850px) {
+	#finaliser {
+		width: 100%;
+	}
+}
+
+.vide {
+	margin: 20px 0 20px 20px;
+}
+
+#retour:hover {
+	color: white;
+	background-color: #000000;
+}
+
+.supprimer, #finaliser, #retour {
+	border: none;
+}
+.supprimer:hover {
+	color: white;
+	background-color: #e5383b;
+}
+
+#finaliser:hover {
+	color: white;
+	background-color: #38b000;
+
+}
+
+h4, #finaliser, #retour {
+	margin-left: 10px;
+}
+
+#icon {
+	width: 40px;
+	height: 40px;
+}
