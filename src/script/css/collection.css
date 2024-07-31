@@ -1,0 +1,108 @@
+/* ordinateur */
+@media only screen and (max-width: 2000px) {
+	img {
+		width: 200px;
+		height: 200px;
+		object-fit: contain;
+	}
+	#icon {
+		width: 40px;
+		height: 40px;
+	}
+	.categorie {
+		margin: 5px 0 5px 0;
+	}
+	.card {
+		background-color: #dee2e6;
+		border: none;
+		margin: 0 20px 0 50px;
+		width: 200px;
+	}
+
+	.btn {
+		height: 50px;
+	}
+
+	#pantalon, #chemise, #veste, #autre, #combinaison {
+		position: relative;
+	}
+	
+	#prevpantalon, #prevchemise, #prevveste, #prevautre, #prevcombinaison {
+		position: absolute;
+		top: 40%;
+	}
+	
+	#nextpantalon, #nextchemise, #nextveste, #nextautre, #nextcombinaison {
+		position: absolute;
+		top: 40%;
+		right: 40%;
+	}	
+}
+
+@media only screen and (max-width: 850px) {
+	.card {
+		width: 140px;
+	}
+
+	#nextpantalon, #nextchemise, #nextveste, #nextautre, #nextcombinaison {
+		position: absolute;
+		top: 40%;
+		right: 15%;
+	}	
+}
+
+/* téléphone */
+@media only screen and (max-width: 480px) {
+	.card {
+		margin-right: 20px;
+		margin-left: 20px;
+		width: 100px;
+	}
+	img {
+		width: 140px;
+		height: 140px;
+	}
+	#icon {
+		width: 30px;
+		height: 30px;
+	}
+
+	.btn {
+		height: 200px;
+	}
+
+	#pantalon, #chemise, #veste, #autre, #combinaison {
+		position: static;
+	}
+	
+	#prevpantalon, #prevchemise, #prevveste, #prevautre, #prevcombinaison {
+		position: static;
+	}
+	
+	#nextpantalon, #nextchemise, #nextveste, #nextautre, #nextcombinaison {
+		position: static;
+	}	
+}
+
+#pantalon, #chemise, #veste, #autre, #combinaison {
+	display: flex;
+	flex-direction: row;
+}
+
+.btn {
+	border: none;
+	background-color: #dee2e6;
+	color: #6c757d;
+}
+
+.btn:hover {
+	color: #343a40;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
